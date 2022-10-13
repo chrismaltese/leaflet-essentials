@@ -1,0 +1,42 @@
+<html>
+<head><title>Leaflet.js Essentials</title>
+<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
+
+<style>
+    html, body, #map {
+      padding: 0;
+      margin: 0;
+      height: 100%;
+    }
+
+  </style>
+</head>
+<body>
+<script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
+<div id="map"></div>
+<script>
+var map = L.map('map', 
+{
+center: [35.10418, -106.62987],
+zoom: 9
+});
+var base = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
+
+
+L.marker([35.10418, -106.62987]).addTo(map).bindPopup("A Lonely Marker Served by Node").openPopup();
+
+map.on('click',function(){
+var xhReq = new XMLHttpRequest();
+xhReq.open("GET", "getpoints", false); 
+xhReq.send(null); 
+var serverResponse = xhReq.responseText;
+
+var d=JSON.parse(serverResponse);
+
+L.marker([d[0].lat,d[0].long]).addTo(map).bindPopup("Added via AJAX call to Node.js").openPopup();
+
+});
+
+</script>
+</body>
+</html>

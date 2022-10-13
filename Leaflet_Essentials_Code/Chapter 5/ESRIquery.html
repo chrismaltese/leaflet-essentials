@@ -1,0 +1,74 @@
+<html>
+<head>
+  
+  <title>Leaflet Essentials</title>
+  <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+
+ 
+  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+  <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+  <script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/0.0.1-beta.5/esri-leaflet.js"></script>
+
+  
+</head>
+<body>
+
+<style>
+  #query {
+    position: absolute;
+    top: 10px;
+    right: 500px;
+    z-index: 10;
+    background: white;
+    padding: 1em;
+  }
+
+  #query select {
+    font-size: 16px;
+  }
+</style>
+
+<div id="map" style="width: 600px; height: 400px"></div>
+<div id="query" class="leaflet-bar">
+<label>
+ Status
+  <select id="caseStatus">
+    <option value=''>Clear Screen</option>
+    <option value='Open'>Open</option>
+    <option value='Closed'>Closed</option>
+    
+  </select>
+</label>
+</div>
+
+<script>
+  var map = L.map('map').setView([40.66293, -73.96271], 8);
+
+ 
+  L.esri.basemapLayer('Streets').addTo(map);
+  var graffiti = L.esri.featureLayer('http://services.arcgis.com/rOo16HdIMeOBI4Mb/ArcGIS/rest/services/Graffiti_Locations3/FeatureServer/0', {
+   pointToLayer: function (geojson, latlng, feature) {
+      return L.marker(latlng);
+    },
+  }).addTo(map);
+
+var popupTemplate = "<h3>Details:</h3>Address: {Incident_Address_Display}<br>Borough: {Borough}<br>Community Board: {Community_Board}<br>Police Precinct: {Police_Precinct}<br>City_Council_District: {City_Council_District}<br>Created_Date: {Created_Date}<br>Status: {Status}<br>Resolution_Action: {Resolution_Action}<br>Closed_Date: {Closed_Date}<br>City: {City}<br>State: {State}";
+
+    graffiti.bindPopup(function(feature){
+        return L.Util.template(popupTemplate, feature.properties)
+      });
+
+
+
+  
+
+  caseStatus.addEventListener('change', function(){
+    graffiti.setWhere('Status="'+caseStatus.value+'"');
+  });
+</script>
+
+</body>
+</html>
+
+
+

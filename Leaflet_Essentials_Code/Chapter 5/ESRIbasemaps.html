@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+    <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+
+    
+    <script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/0.0.1-beta.5/esri-leaflet.js"></script>
+
+    
+  </head>
+  <body>
+    <div id="map" style="width: 600px; height: 400px"></div>
+    
+
+<script>
+      var map = L.map('map').setView([35.10418,-106.62987], 13);  
+
+      var gray = L.esri.basemapLayer("Gray",{detectRetina: true}).addTo(map);
+gray.setOpacity(1);
+      var grayLabel = L.esri.basemapLayer("GrayLabels").addTo(map);
+
+gray.on("load", alertme);
+function alertme(){alert("ESRI Basemap Loaded");}
+
+
+    </script>
+  </body>
+</html>
+

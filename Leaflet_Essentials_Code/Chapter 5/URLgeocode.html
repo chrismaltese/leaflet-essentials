@@ -1,0 +1,43 @@
+<html>
+<head>
+ 
+  <title>Leaflet Essentials</title>
+  <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+
+  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+  <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+  <script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/0.0.1-beta.5/esri-leaflet.js"></script>
+
+  
+</head>
+<body>
+
+<script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/0.0.1-beta.5/esri-leaflet-geocoder.js"></script>
+
+<div id="map" style="width: 600px; height: 400px"></div>
+<script>
+
+
+var x = location.search;
+var y = x.split("=");
+var temp=y[1];
+var address = decodeURIComponent(temp);
+
+var map = L.map('map').setView([35.10418, -106.62987], 13);
+  
+ L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
+
+  var geocodeService = new L.esri.Services.Geocoding();
+
+
+    geocodeService.geocode(address, {}, function(error, result){
+	
+    L.marker(result[0].latlng).addTo(map);
+	map.setView(result[0].latlng,13);
+    });
+
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,30 @@
+<html>
+<head><title>Leaflet.js Essentials</title>
+<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
+<script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
+<script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/0.0.1-beta.5/esri-leaflet-core.js"></script>
+<script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/0.0.1-beta.3/esri-leaflet-geocoder.js"></script>
+<link rel="stylesheet" type="text/css" href="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/0.0.1-beta.3/esri-leaflet-geocoder.css">
+</head>
+  <body>
+    <div id="map" style="width: 600px; height: 400px"></div>
+    <script>
+      var map = L.map('map', 
+{
+center: [35.10418, -106.62987],
+zoom: 9
+});
+L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
+      var searchControl = new L.esri.Controls.Geosearch().addTo(map);
+
+     var results = new L.LayerGroup().addTo(map);
+
+      searchControl.on("results", function(data){
+        results.clearLayers();
+       
+          results.addLayer(L.marker(data.results[0].latlng));
+        
+      });
+    </script>
+  </body>
+</html>

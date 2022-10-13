@@ -1,0 +1,17 @@
+<html>
+<head><title>Leaflet.js Essentials</title>
+<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
+</head>
+<body>
+<script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
+<div id="map" style="width: 600px; height: 400px"></div>
+<script>
+var map = L.map('map', 
+{
+center: [35.10418, -106.62987],
+zoom: 10
+});
+L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
+</script>
+</body>
+</html>

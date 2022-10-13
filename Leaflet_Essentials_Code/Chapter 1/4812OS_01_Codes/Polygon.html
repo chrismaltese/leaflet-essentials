@@ -1,0 +1,20 @@
+<html>
+<head><title>Leaflet.js Essentials</title>
+<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
+</head>
+<body>
+<script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
+
+<div id="map" style="width: 600px; height: 400px"></div>
+<script>
+var map = L.map('map', 
+{
+center: [35.10418, -106.62987],
+zoom: 10
+});
+L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
+
+var polygon = L.polygon([[35.10418, -106.62987],[35.19738, -106.875],[35.07946, -106.80634]], {color: 'red',weight:8,fillColor:'blue',fillOpacity:1}).addTo(map);
+</script>
+</body>
+</html>

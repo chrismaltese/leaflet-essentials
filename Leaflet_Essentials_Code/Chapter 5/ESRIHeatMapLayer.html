@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+    <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+
+    
+<script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/0.0.1-beta.5/esri-leaflet.js"></script>
+<script src="esri-leaflet-heatmap-feature-layer.js"></script>
+<script src="leaflet-heat.js"></script>
+
+    
+  </head>
+  <body>
+    <div id="map" style="width: 600px; height: 400px"></div>
+    <script>
+    
+
+
+var map = new L.Map('map').setView([40.722868115037,-73.92142295837404], 1);
+L.esri.basemapLayer("Streets").addTo(map);
+
+var heatmap = new L.esri.HeatmapFeatureLayer("http://services.arcgis.com/pmcEyn9tLWCoX7Dm/arcgis/rest/services/USGS_Earthquakes_Excel_Layer/FeatureServer/0", {
+  radius: 50,
+	blur:90,
+	maxZoom:10
+
+}).addTo(map);
+
+
+
+
+
+    </script>
+  </body>
+</html>
+

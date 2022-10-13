@@ -1,0 +1,29 @@
+<html>
+<head><title>Leaflet.js Essentials</title>
+<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
+</head>
+<body>
+<script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
+<div id="map" style="width: 600px; height: 400px"></div>
+<script>
+var map = L.map('map', 
+{
+center: [35.10418, -106.62987],
+zoom: 10
+});
+var usgs = L.tileLayer.wms("http://basemap.nationalmap.gov/ArcGIS/services/USGSImageryTopo/MapServer/WMSServer", {
+    layers:'0',
+    format: 'image/png',
+    transparent: true,
+    attribution: "USGS"
+}).addTo(map);
+
+var nexrad = L.tileLayer.wms("http://nowcoast.noaa.gov/wms/com.esri.wms.Esrimap/obs", {
+    layers: 'RAS_RIDGE_NEXRAD',
+    format: 'image/png',
+    transparent: true,
+    attribution: "NOAA/NWS"
+}).addTo(map);
+</script>
+</body>
+</html>

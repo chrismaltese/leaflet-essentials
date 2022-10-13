@@ -1,0 +1,28 @@
+<html>
+<head>
+	<title>Leaflet.js Essentials</title>
+	
+<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+</head>
+<body>
+<div id="map" style="width: 600px; height: 400px"></div>
+
+<script src="leaflet-heat.js"></script>	
+<script>
+var map = L.map("map").setView([35.10418, -106.62987], 10);
+var points=[];
+
+L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
+var heat = L.heatLayer(points,{maxZoom:10}).addTo(map);
+
+function addpoint(e){
+heat.addLatLng(e.latlng);
+
+}
+
+map.on('click',addpoint);
+
+</script>
+</body>
+</html>

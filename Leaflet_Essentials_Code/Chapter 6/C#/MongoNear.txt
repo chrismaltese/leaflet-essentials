@@ -1,0 +1,62 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Windows.Forms;
+using MSHTML;
+using MongoDB.Bson;
+using MongoDB.Driver;
+using MongoDB.Driver.Linq;
+using MongoDB.Driver.Builders;
+
+namespace MongoForBook
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            string hiddenHTML = webBrowser1.Document.GetElementById("points").InnerHtml;
+            string[] thePoints = hiddenHTML.Split(',');
+            //MessageBox.Show(thePoints[0]+" "+thePoints[1]);
+
+
+            var client = new MongoClient("mongodb://localhost:27017");
+            var server = client.GetServer();
+            var database = server.GetDatabase("albuquerque");
+            var collection = database.GetCollection("publicart");
+            var query = Query.Near("loc", double.Parse(thePoints[0]), double.Parse(thePoints[1]));
+            StringBuilder myLocString = new StringBuilder();
+            myLocString.Append("function addLocPoints() {");
+
+            foreach (BsonDocument item in collection.Find(query).SetLimit(5))
+            {
+                BsonElement loc = item.GetElement("loc");
+                string g = loc.Value.ToString();
+                string x = g.Trim(new Char[] { '[', ']' });
+                String[] a = x.Split(',');
+                // BsonElement name = item.GetElement("name"); Work for all indexes in MongoDB
+                // Pass the other data to the notes popups below
+
+                myLocString.Append("L.marker([" + a[0] + "," + a[1] + "]).addTo(map).bindPopup(\"" + item["name"] + "<br><img src='" + item["popup"] + "'>\");" + "\r\n");
+
+                // MessageBox.Show(a[0] + " " + a[1]);
+            }
+            myLocString.Append("}");
+            HtmlElement head = webBrowser1.Document.GetElementsByTagName("body")[0];
+            HtmlElement scriptElement = webBrowser1.Document.CreateElement("script");
+            IHTMLScriptElement addPointsElement = (IHTMLScriptElement)scriptElement.DomElement;
+            addPointsElement.text = myLocString.ToString();
+            head.AppendChild(scriptElement);
+            webBrowser1.Document.InvokeScript("addLocPoints");
+
+        }
+    }
+}

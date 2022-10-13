@@ -1,0 +1,27 @@
+<html>
+<head><title>Leaflet.js Essentials</title>
+<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
+</head>
+<body>
+<script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
+
+<div id="map" style="width: 600px; height: 400px"></div>
+<script>
+var map = L.map('map', 
+{
+center: [35.10418, -106.62987],
+zoom: 10
+});
+L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
+var marker=L.marker([35.10418, -106.62987]).bindPopup("I am a Marker");
+var marker2=L.marker([35.02381, -106.63811]).bindPopup("I am Marker 2");
+var polyline=L.polyline([[35.10418, -106.62987],[35.19738, -106.875],[35.07946, -106.80634]], {color: 'red',weight:8}).bindPopup("I am a Polyline");
+var myfeatureGroup=L.featureGroup([marker, marker2, polyline])
+     .addTo(map).setStyle({color:'purple',opacity:.5})
+     .bindPopup("We have the same popup because we are a group");
+
+
+
+</script>
+</body>
+</html>

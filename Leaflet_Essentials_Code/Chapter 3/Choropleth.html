@@ -1,0 +1,45 @@
+<html>
+<head><title>Leaflet.js Essentials</title>
+<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
+</head>
+<body>
+<script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
+<script src="censustracts.js"></script>
+<div id="map" style="width: 600px; height: 400px"></div>
+<script>
+var map = L.map('map', 
+{
+center: [35.10418, -106.62987],
+zoom: 9
+});
+L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
+
+
+
+
+function color(x) {
+    return x > 200000 ? '#990000' :
+           x > 100000  ? '#d7301f' :
+           x > 30000  ? '#ef6548' :
+           x > 20000  ? '#fc8d59' :
+           x > 10000   ? '#fdbb84' :
+           x > 5000   ? '#fdd49e' :
+           x > 0   ? '#fee8c8' :'#fff7ec';
+                      
+}
+
+function myStyle(feature) {
+    return {
+        fillColor: color(feature.properties.AWATER10),
+        weight: 1,
+        opacity: 1,
+	color: 'white',
+	fillOpacity: 0.85
+    };
+}
+
+var geoJsonLayer = L.geoJson(ct, {style: myStyle}).addTo(map);
+
+</script>
+</body>
+</html>

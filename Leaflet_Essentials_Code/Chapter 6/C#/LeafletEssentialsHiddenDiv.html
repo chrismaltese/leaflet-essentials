@@ -1,0 +1,44 @@
+<html>
+<head><title>Leaflet.js Essentials</title>
+<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
+<style>
+    html, body, #map {
+      padding: 0;
+      margin: 0;
+      height: 100%;
+    }
+#points.hidden {
+    display: none;
+}
+  </style>
+</head>
+<body>
+<script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
+<div id="map"></div>
+<div id="points"></div>
+<script>
+var map = L.map('map', 
+{
+center: [35.10418, -106.62987],
+zoom: 9
+});
+L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
+
+
+
+
+map.on('click',function(e){L.marker(e.latlng).addTo(map).bindPopup("SEARCH LOCATION").openPopup();
+var a=String(e.latlng).split(",");
+var lat=a[0].split("(");
+var lon=a[1].split(")");
+
+
+document.getElementById("points").innerHTML = lat[1]+","+lon[0];
+
+});
+
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<html>
+<head><title>Leaflet.js Essentials</title>
+<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
+</head>
+<body>
+<script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
+<div id="map" style="width: 600px; height: 400px"></div>
+<script>
+var map = L.map('map', 
+{
+center: [35.10418, -106.62987],
+zoom: 9
+});
+L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
+
+
+var geojson={
+"type": "Feature",
+ 	"geometry": {
+   		"type": "Polygon",
+   		 "coordinates":[[ 
+	    [-106.78059, 35.14574],
+            [-106.7799, 35.10559],
+            [-106.71467,35.13704],
+            [-106.69716, 35.17942],
+            [-106.78059, 35.14574]
+]]
+               },
+"properties": {
+ 		"name": "My Polygon",
+ 		 "title": "Balloon Fiesta Park"
+                  }
+};
+
+var myMarker=L.marker([35.10418, -106.62987]);
+var markerAsGeoJSON = myMarker.toGeoJSON();
+var geoJsonLayer = L.geoJson(geojson).addTo(map);
+geoJsonLayer.addData(markerAsGeoJSON).bindPopup("I was added as GeoJSON with .addData()");
+
+</script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<html>
+<head>
+	<title>Leaflet Quick Start Guide Example</title>
+	<meta charset="utf-8" />
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	 <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
+</head>
+<body>
+<div style="width:600px; height:200px">
+<br><br><h1>Enter a Point</h1>
+LAT:<input type="text" id="lat">
+LONG:<input type="text" id="long">
+Name:<input type="text" id="name">
+<button onclick="save()">SAVE</button>
+
+
+</div>
+	<div id="map" style="width: 1200px; height: 600px"></div>
+
+ <script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
+	<script>
+
+
+var map = L.map('map').setView([35.10418, -106.62987],10);
+
+L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
+
+function save()
+{
+localStorage[document.getElementById("name").value]=document.getElementById("lat").value+","+document.getElementById("long").value;
+alert("Saved: "+document.getElementById("name").value);
+var p1=parseFloat(document.getElementById("lat").value);
+var p2=parseFloat(document.getElementById("long").value);
+L.marker([p1,p2]).addTo(map);
+}
+
+for (var i=0; i <localStorage.length;i++)
+{
+alert(localStorage.key(i))
+var x=localStorage[localStorage.key(i)];
+var points=x.split(',');
+var p1=parseFloat(points[0]);
+var p2=parseFloat(points[1]);
+L.marker([p1,p2]).addTo(map);
+//localStorage.removeItem(localStorage.key(i)); clear out storage to start clean
+}
+
+</script>
+
+</body>
+</html>

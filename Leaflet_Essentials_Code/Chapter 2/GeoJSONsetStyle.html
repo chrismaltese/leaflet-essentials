@@ -1,0 +1,61 @@
+<html>
+<head><title>Leaflet.js Essentials</title>
+<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
+</head>
+<body>
+<script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
+<div id="map" style="width: 600px; height: 400px"></div>
+<script>
+var map = L.map('map', 
+{
+center: [35.10418, -106.62987],
+zoom: 9
+});
+L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
+
+function styleFunction(){
+return {color: "purple"};
+        }
+
+var geojson = [{
+"type": "Feature",
+ 	"geometry": {
+   		"type": "LineString",
+   		 "coordinates":[[-106.67999, 35.14097],[-106.68892, 35.12974],[-106.69064, 35.1098]]
+               },
+"properties": {
+ 		"name": "LineString",
+ 		 "title": "A line along the Rio Grande"
+                  }
+},{
+"type": "Feature",
+ 	"geometry": {
+   		"type": "Polygon",
+   		 "coordinates":[[ 
+	    [-106.78059, 35.14574],
+            [-106.7799, 35.10559],
+            [-106.71467,35.13704],
+            [-106.69716, 35.17942],
+            [-106.78059, 35.14574]
+]]
+               },
+"properties": {
+ 		"name": "Polygon",
+ 		 "title": "Balloon Fiesta Park"
+                  }
+              }];
+function newStyle(){
+geoJsonLayer.setStyle({color:"green"});
+}
+function oldStyle(){
+geoJsonLayer.setStyle({color:"purple"});
+}
+var geoJsonLayer = L.geoJson(geojson,{style:styleFunction}).addTo(map);
+geoJsonLayer.on('mouseover',newStyle);
+geoJsonLayer.on('mouseout',function(e){geoJsonLayer.resetStyle(e.target);});
+
+
+</script>
+
+</body>
+</html>

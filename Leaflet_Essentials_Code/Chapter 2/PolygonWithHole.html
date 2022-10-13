@@ -1,0 +1,47 @@
+<html>
+<head><title>Leaflet.js Essentials</title>
+<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
+</head>
+<body>
+<script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
+<div id="map" style="width: 600px; height: 400px"></div>
+<script>
+var map = L.map('map', 
+{
+center: [35.10418, -106.62987],
+zoom: 9
+});
+L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
+
+
+var geojson = [{
+"type": "Feature",
+ 	"geometry": {
+   		"type": "Polygon",
+   		 "coordinates":[
+[[-106.875, 35.20074],
+            [-106.82281, 34.9895],
+            [-106.50146, 35.00525],
+            [-106.47949, 35.1985],
+            [-106.875, 35.20074]],[
+	[-106.6745, 35.1463],
+[-106.70403, 35.05192],
+[-106.55296, 35.05979],
+[-106.53854, 35.17212],
+[-106.6745, 35.1463]]
+
+]
+               },
+"properties": {
+ 		"name": "My Polygon",
+ 		 "title": "Balloon Fiesta Park"
+                  }
+              
+              }];
+
+var geoJsonLayer = L.geoJson(geojson).addTo(map).bindPopup("Polygon with a Hole");
+
+
+</script>
+</body>
+</html>

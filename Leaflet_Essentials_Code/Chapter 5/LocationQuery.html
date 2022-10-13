@@ -1,0 +1,79 @@
+<html>
+<head>
+  <meta charset=utf-8 />
+  <title>Leaflet.js Essentials</title>
+  <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+
+  
+  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+  <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+  <script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/0.0.1-beta.5/esri-leaflet.js"></script>
+
+</head>
+<body>
+
+<style>
+  #query {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 10;
+    background: white;
+    padding: 1em;
+  }
+
+  #query select {
+    font-size: 16px;
+  }
+</style>
+
+<div id="map"></div>
+
+<script>
+  var map = L.map('map').setView([40.66293, -73.96271], 8);
+
+ 
+  L.esri.basemapLayer('Streets').addTo(map);
+  var graffiti = L.esri.featureLayer('http://services.arcgis.com/rOo16HdIMeOBI4Mb/ArcGIS/rest/services/Graffiti_Locations3/FeatureServer/0', {
+   pointToLayer: function (geojson, latlng, feature) {
+      return L.circleMarker(latlng);
+    },
+  }).addTo(map);
+
+var popupTemplate = "<h3>Details:</h3>Address: {Incident_Address_Display}<br>Borough: {Borough}<br>Community Board: {Community_Board}<br>Police Precinct: {Police_Precinct}<br>City_Council_District: {City_Council_District}<br>Created_Date: {Created_Date}<br>Status: {Status}<br>Resolution_Action: {Resolution_Action}<br>Closed_Date: {Closed_Date}<br>City: {City}<br>State: {State}";
+
+    graffiti.bindPopup(function(feature){
+        return L.Util.template(popupTemplate, feature.properties)
+      });
+
+var query = L.esri.Tasks.query('http://services.arcgis.com/rOo16HdIMeOBI4Mb/ArcGIS/rest/services/Graffiti_Locations3/FeatureServer/0');
+
+
+function runQuery(e){
+
+
+graffiti.query().nearby(e.latlng,804).ids(function(error,ids){
+
+graffiti.setStyle(function(){return { color: "blue"};});
+
+
+
+for(var i=0;i<ids.length;i++){graffiti.setFeatureStyle(ids[i],{color:"green"});}});
+
+
+}
+
+ 
+map.on('click', runQuery);
+  
+
+ 
+  
+
+</script>
+
+</body>
+</html>
+
+
+

@@ -1,0 +1,14 @@
+doctype html
+html(lang="en")
+	head
+		title= title
+		link(rel='stylesheet', href='http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css')
+		script(src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js")
+						
+	body
+	#map(style='width:'+900+'px;'+'height:'+800+'px')
+		script(type='text/javascript').
+			var map = L.map('map', {center: [35.10418, -106.62987],	zoom: 9});
+			var base = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
+			L.marker([35.10418, -106.62987]).addTo(map).bindPopup("A Lonely Marker").openPopup();
+			map.on('click',function(){var xhReq = new XMLHttpRequest();xhReq.open("GET", "getpoints", false);xhReq.send(null);var serverResponse = xhReq.responseText;var d=JSON.parse(serverResponse);L.marker([d[0].lat,d[0].long]).addTo(map).bindPopup("Added via AJAX call to Node.js").openPopup();});

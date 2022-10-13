@@ -1,0 +1,37 @@
+<html>
+<head>
+	<title>Leaflet Express</title>
+	
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	 <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+ <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+</head>
+<body>
+	<div id="map" style="width: 600px; height: 400px"></div>
+
+
+<script src="AnimatedMarker.js"></script>	
+<script src="bouncemarker.js"></script>	
+
+	<script>
+
+var map = L.map("map").setView([35.10727, -106.61734], 12);
+
+L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
+
+
+b = new L.Marker([35.10601, -106.69287], {bounceOnAdd: true});
+
+var line = L.polyline([[35.10306, -106.58695],[35.1046, -106.60137],[35.10727, -106.61734],[35.1046, -106.63794],[35.10601, -106.69287]]);
+var animatedMarker = L.animatedMarker(line.getLatLngs(),{autoStart: false, distance: 600, interval: 900, onEnd: function() {b.addTo(map);b.bounce({duration: 100, height: 50});map.removeLayer(animatedMarker);setTimeout('bye()',900);}});
+function bye(){map.removeLayer(b);}
+map.addLayer(animatedMarker);
+function go(){animatedMarker.start();}
+function no(){animatedMarker.stop();}
+	</script>
+<button onclick="go()">Start</button>
+<button onclick="no()">Stop</button>
+</body>
+</html>

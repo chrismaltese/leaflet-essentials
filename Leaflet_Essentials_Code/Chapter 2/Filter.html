@@ -1,0 +1,67 @@
+<html>
+<head><title>Leaflet.js Essentials</title>
+<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
+</head>
+<body>
+<script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
+<div id="map" style="width: 600px; height: 400px"></div>
+<script>
+var map = L.map('map', 
+{
+center: [35.10418, -106.62987],
+zoom: 10
+});
+
+L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
+var geojsonFeature =[{
+"type": "Feature",
+"geometry": {
+"type": "Point",
+"coordinates": [-106.62987, 35.10418]
+  			},
+ 	"properties": {
+       	"name": "My Point",
+         "title": "A point at the Big I"
+    		  }
+},{
+"type": "Feature",
+ 	"geometry": {
+   		"type": "Point",
+   		 "coordinates": [-106, 35]
+               },
+"properties": {
+ 		"name": "My Other Point",
+ 		 "title": "A point near Moriarty and I40"
+                  }
+              }]; 
+
+
+var options2 = {
+    draggable: false,
+    title: "A point near Moriarty and I40"
+    };
+
+var x;
+var y;
+
+L.geoJson(geojsonFeature, {
+    filter: function(feature,latlng) {
+        switch (feature.properties.name) {
+            case "My Point": return true;
+            case "My Other Point":  return false;
+        }
+
+    },
+onEachFeature: function(feature,layer) {
+       layer.bindPopup(feature.properties.name);
+    }
+}).addTo(map);
+
+
+
+
+</script>
+</body>
+</html>
+
+

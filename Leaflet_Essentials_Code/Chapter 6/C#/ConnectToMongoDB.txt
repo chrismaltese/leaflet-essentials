@@ -1,0 +1,51 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Windows.Forms;
+using MSHTML;
+using MongoDB.Bson;
+using MongoDB.Driver;
+using MongoDB.Driver.Linq;
+using MongoDB.Driver.Builders;
+
+namespace MongoForBook
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            StringBuilder myString = new StringBuilder();
+            myString.Append("function addPoints() {");
+
+            var client = new MongoClient("mongodb://localhost:27017");
+            var server = client.GetServer();
+            var database = server.GetDatabase("albuquerque");
+            var collection = database.GetCollection("publicart");
+
+            foreach (var document in collection.FindAll())
+            {
+                myString.Append("L.marker([" + document["loc"][0] + "," + document["loc"][1] + "]).addTo(map).bindPopup(\"" + document["name"] + "<br><img src='" + document["popup"] + "'>\");" + "\r\n");
+            }
+            
+            myString.Append("}");
+
+
+
+            HtmlElement head = webBrowser1.Document.GetElementsByTagName("body")[0];
+            HtmlElement scriptElement = webBrowser1.Document.CreateElement("script");
+            IHTMLScriptElement addPointsElement = (IHTMLScriptElement)scriptElement.DomElement;
+            addPointsElement.text = myString.ToString();
+            head.AppendChild(scriptElement);
+            webBrowser1.Document.InvokeScript("addPoints");
+        }
+    }
+}

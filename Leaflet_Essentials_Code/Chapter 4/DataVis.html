@@ -1,0 +1,65 @@
+<html>
+<head><title>Leaflet.js Essentials</title>
+<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
+<link rel="stylesheet" href="dvf.css" />
+</head>
+</head>
+<body>
+<script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
+<script src="leaflet-dvf.js"></script>
+<script src="leaflet-dvf.markers.js"></script>
+<div id="map" style="width: 600px; height: 400px"></div>
+<script>
+var map = L.map('map', 
+{
+center: [35.10418, -106.62987],
+zoom: 9
+});
+L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
+
+var marker = new L.MapMarker([35.10418, -106.62987], {
+    radius: 30,
+fillOpacity:0.5,
+fillColor:'orange',
+color:'purple',
+innerRadius:7,
+numberOfSides:4,
+rotation:10
+    
+});
+
+map.addLayer(marker);
+
+
+var polygonmarker = new L.RegularPolygonMarker([35,-106], {
+    numberOfSides: 3,
+    rotation: 10,
+    radius: 10,
+fillColor:'green',
+fillOpacity:1,
+opacity:1,
+weight:1,
+radius:30
+   
+});
+
+map.addLayer(polygonmarker);
+
+
+var star = new L.StarMarker([35,-107], {numberOfPoints:8, opacity:1, weight:2, fillOpacity:0,radius:30});
+map.addLayer(star);
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>
